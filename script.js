@@ -47,7 +47,7 @@
               sim: "SIM",
               data: firebase.database.ServerValue.TIMESTAMP
             });
-             alert("Bom saber!!! O status foi modificado na nossa núvem de dados. Obrigado pela colaboração!");
+             alert("Bom saber!!! \n\nO status foi modificado na núvem. \n\nObrigado por usar o Smell Check!");
 
        });
 
@@ -57,11 +57,11 @@
       $('ul').on('click', '#sim', function () {
         var newStoreRef2 = dbRefList.push();
           dbRefList.set({
-            nao: "NAO",
+            nao: "NÃO",
             data: firebase.database.ServerValue.TIMESTAMP
           });
 
-          alert("Bom saber!!! O status foi modificado na nossa núvem de dados. Obrigado pela colaboração!");
+          alert("Bom saber!!! \n\nO status foi modificado na núvem. \n\nObrigado por usar o Smell Check!");
 
 
 
