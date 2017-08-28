@@ -19,9 +19,14 @@
 
     const dbRefObject = firebase.database().ref().child('msg');
     const dbRefList = dbRefObject.child('respostas');
+    const tempo = dbRefList.child('data');
 
     dbRefObject.on('value', snap => {
       preObject.innerText = JSON.stringify(snap.val(), null, 3);
+    });
+
+    tempo.on('value', snap => {
+      document.getElementById("since").innerHTML = new Date(snap.val());
     });
 
     dbRefList.on('child_added', snap => {
@@ -47,6 +52,8 @@
               sim: "SIM",
               data: firebase.database.ServerValue.TIMESTAMP
             });
+
+            document.getElementById("since").innerHTML = tempo;
              alert("Bom saber!!! \n\nO status foi modificado na nuvem. \n\nObrigado por usar o Smell Check!");
 
        });
@@ -61,6 +68,7 @@
             data: firebase.database.ServerValue.TIMESTAMP
           });
 
+          document.getElementById("since").innerHTML = tempo;
           alert("Bom saber!!! \n\nO status foi modificado na nuvem. \n\nObrigado por usar o Smell Check!");
 
 
