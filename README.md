@@ -1,3 +1,3 @@
-Atualize a resposta (SIM ou NAO) na linha 70 do arquivo *index.html*
+Esse mini aplicativo foi desenvolvido com Html + CSS + Javascript + Firebase
 
 Confira o resultado em: https://lafac.github.io/banheiro/
