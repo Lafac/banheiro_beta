@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <title>Posso usar o banheiro do Lafac?</title>
+  <link rel="shortcut icon" href="favicon.ico" />
+  <style>
+    html {
+  height: 100%;
+}
+
+#data {
+display: none;
+  position:absolute;
+bottom:0px;
+font-size: 8px;
+}
+    body {
+
+    background-image: url(https://img.wonderhowto.com/img/77/45/63637780550039/0/health-alert-youre-taking-crap-wrong-is-you-poop-properly.1280x600.jpg);
+   background-size: auto 100%;
+        background-repeat: no-repeat;
+        background-position: top;
+  }
+   a {
+     color: #000;
+   }
+
+   ul  {
+
+   padding-left: 25px;
+
+     position:relative;
+     -webkit-box-shadow: rgba(0,0,0,0.8) 0px 0 10px;
+     -moz-box-shadow: rgba(0,0,0,0.8) 0 0 10px;
+     box-shadow: rgba(0,0,0,0.8) 0 0 10px;
+     -webkit-border-radius: 100%;
+   -moz-border-radius: 100%;
+   border-radius: 100%;
+   width: 100px;
+       margin: 0 auto;
+   }
+   .lista {
+     margin-top:20px;
+     margin-bottom: 20px;
+   }
+   #sim {
+
+     position: relative;
+
+     padding: 0px;
+   width: 100px;
+   height: 100px;
+     font-size: 40px;
+       overflow: hidden;
+
+       background-color: #7CFC00;
+
+       text-align: center;
+       left: -25px;
+       border-radius: 100%;
+       line-height: 100px;
+       vertical-align: center;
+   }
+   #nao {
+
+
+     position: relative;
+
+     padding: 0px;
+   width: 100px;
+   height: 100px;
+     font-size: 40px;
+       overflow: hidden;
+       color: #fff;
+       background-color: #f33;
+
+       text-align: center;
+       left: -25px;
+       border-radius: 100%;
+       line-height: 100px;
+       vertical-align: center;
+   }
+
+
+    #answer {
+        -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+      font-size: 6em;
+      padding: 25px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 25px;
+      left: 50%;
+      margin: 0;
+      position: absolute;
+      text-align: center;
+      top: 45%;
+      transform: translate(-50%, -50%);
+    }
+
+    #posso {
+      font-size: 0.3em;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #since {
+      font-size: 0.15em;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #atualize {
+      font-size: 0.7em;
+      position: relative;
+      margin: 0 auto;
+      text-align: center;
+      text-transform:uppercase;
+    }
+    #versao {
+      font-size: 0.6em;
+      position: relative;
+      margin: 10px auto;
+      text-align: center;
+
+    }
+    #footer {
+
+      position:absolute;
+      margin: 0 auto;
+      left: 0;
+      right: 0;
+      bottom: 0;
+  width: 300px;
+  height:50px;
+
+
+    }
+      .nariz {
+      width:200px;
+    }
+    @media only screen and (max-width: 500px) {
+      #answer  {
+            font-size: 5em;
+             top: 45%;
+
+      }
+      .nariz {
+        width:120px; margin-bottom:0px; padding:5px;
+      }
+      #posso {
+        font-size: 0.25em;
+        margin: 0 auto;
+        text-align: center;
+      }
+  }
+  </style>
+</head>
+<body>
+
+  <div id="answer">
+      <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/20407-200.png" class="nariz" alt="">
+   <p id="posso">Posso entrar no banheiro <br>do LAFAC?</p>
+<b>
+<div class="lista">
+
+
+  <ul id="list">
+
+  </ul>
+  <p id="atualize" style="font-size:10px; margin-top:20px;">Clique para alternar <br> a resposta</p>
+  </div>
+</b>
+  <!--  <p id="since"></p> -->
+
+  </div>
+<div id="footer">
+<div class="footerw">
+
+    <a href="https://github.com/Lafac/banheiro" target="_blank"><p id="atualize">Veja o repositório do projeto no github</p></a>
+    <p id="versao">Versão Alpha</p>
+</div></div>
+  <script>
+
+    var LAST_UPDATE = new Date(document.lastModified);
+
+    var sinceEl = document.getElementById('since');
+
+    function getTimeSince(starttime) {
+      var t = +new Date - starttime;
+      var seconds = Math.floor((t / 1000) % 60);
+      var minutes = Math.floor((t / 1000 / 60) % 60);
+      var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+      var days = Math.floor(t / (1000 * 60 * 60 * 24));
+
+      return {
+        'total': t,
+        'days': days,
+        'hours': hours,
+        'minutes': minutes,
+        'seconds': seconds
+      };
+    }
+
+    function pluralize(s, v) {
+      if (v > 1) {
+        s += 's';
+      }
+      return s;
+    }
+
+    function updateTimer() {
+      var time = getTimeSince(LAST_UPDATE);
+
+      var countdownStr = '(atualizado a ';
+
+      var days = time.days;
+      if (days > 0) {
+        countdownStr += days + ' ' + pluralize('dia', days) + ', ';
+      }
+
+      var hours = time.hours;
+      if (hours > 0) {
+        countdownStr += hours + ' ' + pluralize('hora', hours) + ', ';
+      }
+
+      var minutes = time.minutes;
+      countdownStr += minutes + ' ' + pluralize('minuto', minutes) + ' e ';
+
+      var seconds = time.seconds;
+      countdownStr += seconds + ' ' + pluralize('segundo', seconds);
+
+      countdownStr += ' atrás)';
+
+      sinceEl.innerText = countdownStr;
+    }
+
+    setInterval(updateTimer, 100);
+
+  </script>
+    <script src="script.js"></script>
+</body>
+</html>
