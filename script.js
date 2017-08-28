@@ -47,7 +47,7 @@
               sim: "SIM",
               data: firebase.database.ServerValue.TIMESTAMP
             });
-             alert("Bom saber!!! \n\nO status foi modificado na núvem. \n\nObrigado por usar o Smell Check!");
+             alert("Bom saber!!! \n\nO status foi modificado na nuvem. \n\nObrigado por usar o Smell Check!");
 
        });
 
@@ -61,7 +61,7 @@
             data: firebase.database.ServerValue.TIMESTAMP
           });
 
-          alert("Bom saber!!! \n\nO status foi modificado na núvem. \n\nObrigado por usar o Smell Check!");
+          alert("Bom saber!!! \n\nO status foi modificado na nuvem. \n\nObrigado por usar o Smell Check!");
 
 
 
